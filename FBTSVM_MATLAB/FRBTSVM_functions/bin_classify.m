@@ -1,4 +1,4 @@
-function [acc,outclass,time, fp, fn]= bin_classify(ftsvm_struct,Testdata,Testlabel,kobj)
+function [acc,outclass,time, fp, fn]= bin_classify(ftsvm_struct,Testdata,Testlabel,kobj,flag_apply_kernel)
 % Function:  testing ftsvm on test data
 % Input:
 % Model         - the trained model
@@ -12,10 +12,14 @@ function [acc,outclass,time, fp, fn]= bin_classify(ftsvm_struct,Testdata,Testlab
 % time                   - distance to positive plane
 % time                   - distance to negative plane
 
+    if nargin < 5
+        flag_apply_kernel = 1;  % Set default value if optionalParam is not provided
+    end
+
 
 
     
-    if isfield(ftsvm_struct.Parameter,'kernel_name')==1    
+    if isfield(ftsvm_struct.Parameter,'kernel_name')==1   &&  flag_apply_kernel == 1
     Testdata= rf_featurize(kobj, double(Testdata));
     
     end
